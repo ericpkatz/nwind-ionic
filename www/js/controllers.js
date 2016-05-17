@@ -1,6 +1,37 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('UsersCtrl', function($scope, UserService) {
+  UserService.fetchAll()
+    .then(function(users){
+      $scope.users = users;
+    });
+
+})
+.controller('UsersDetailCtrl', function($scope, UserService, $stateParams) {
+  UserService.fetchOne($stateParams.id)
+    .then(function(user){
+      $scope.user = user;
+    });
+
+})
+
+.controller('ProductsCtrl', function($scope) {
+  $scope.products = [
+    {
+      id: 1,
+      name: 'Foo'
+    },
+    {
+      id: 2,
+      name: 'Bar'
+    },
+    {
+      id: 3,
+      name: 'Bazz'
+    },
+  ];
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

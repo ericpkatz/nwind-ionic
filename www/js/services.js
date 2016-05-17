@@ -1,5 +1,27 @@
 angular.module('starter.services', [])
+.factory('UserService', function($q) {
 
+  var _users = [
+    { id: 1 , name: 'Moe' },
+    { id: 2, name: 'Larry' },
+    { id: 3, name: 'Curly' },
+  ];
+   
+  return {
+    fetchAll: function(){
+      return $q.when(_users);
+    },
+    fetchOne: function(id){
+      return $q.when(
+          _users
+            .filter(function(user){
+              return user.id == id;
+            })[0]
+      );
+    }
+  };
+   
+})
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

@@ -1,0 +1,10 @@
+<ion-view view-title="Users">
+  <ion-content class="padding">
+    <h2>Users</h2>
+    <ion-list>
+      <ion-item ng-repeat="user in users" type="item-text-wrap" href="#/tab/users/{{user.id}}">
+        <h2>{{user.name}}</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

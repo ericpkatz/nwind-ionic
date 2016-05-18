@@ -58,7 +58,7 @@ angular.module('nwind', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
-  .state('tab.users-detail', {
+  .state('tab.userDetail', {
     url: '/users/:id',
     views: {
       'tab-users': {
@@ -67,7 +67,18 @@ angular.module('nwind', ['ionic', 'starter.controllers', 'starter.services'])
       }
     }
   })
-
+  .state('tab.userDetail.favorite', {
+    url: '/favorite',
+    templateUrl: 'templates/users-detail-favorite.html',
+  })
+  .state('tab.userDetail.secondFavorite', {
+    url: '/second-favorite',
+    templateUrl: 'templates/users-detail-second-favorite.html',
+  })
+  .state('tab.userDetail.leastFavorite', {
+    url: '/least-favorite',
+    templateUrl: 'templates/users-detail-least-favorite.html',
+  })
   .state('tab.chats', {
       url: '/chats',
       views: {

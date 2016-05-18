@@ -1,6 +1,46 @@
 <ion-view view-title="Users Detail">
   <ion-content class="padding">
     <h2>User</h2>
-    <p>{{ user }}</p>
+    <div class='card'>
+      <div class='item item-energized'>
+        {{ user.firstName }}
+      </div>
+      <div class='item'>
+        {{ user.lastName }}
+      </div>
+      <div class='item'>
+        {{ user.jobTitle }}
+      </div>
+    </div>
+    <!--
+    <div class='card'>
+      <div class='item item-positive'>
+        Favorite Product
+      </div>
+      <div class='item'>
+        {{ user.favoriteProduct.name }}
+      </div>
+    </div>
+    <div class='card'>
+      <div class='item item-positive'>
+        Second Favorite Product
+      </div>
+      <div class='item'>
+        {{ user.secondFavoriteProduct.name }}
+      </div>
+    </div>
+    <div class='card'>
+      <div class='item item-balanced'>
+        Least Favorite Product
+      </div>
+      <div class='item'>
+        {{ user.leastFavoriteProduct.name }}
+      </div>
+    </div>
+    -->
+    <a ui-sref='tab.userDetail.favorite({id: user.id})'>Favorite</a>
+    <a ui-sref='tab.userDetail.secondFavorite({id: user.id})'>Second Favorite</a>
+    <a ui-sref='tab.userDetail.leastFavorite({id: user.id})'>Least Favorite</a>
+    <ion-nav-view></ion-nav-view>
   </ion-content>
 </ion-view>

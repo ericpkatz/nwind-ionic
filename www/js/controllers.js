@@ -15,21 +15,12 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ProductsCtrl', function($scope) {
-  $scope.products = [
-    {
-      id: 1,
-      name: 'Foo'
-    },
-    {
-      id: 2,
-      name: 'Bar'
-    },
-    {
-      id: 3,
-      name: 'Bazz'
-    },
-  ];
+.controller('ProductsCtrl', function($scope, ProductService) {
+  ProductService.fetchAll()
+    .then(function(products){
+      $scope.products = products;
+    
+    });
 
 })
 

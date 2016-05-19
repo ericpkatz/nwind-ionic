@@ -10,12 +10,21 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'tests/**/*.js'
+    'www/lib/ionic/js/ionic.bundle.js',
+    'www/lib/js-data/dist/js-data.js',
+    'www/lib/js-data-angular/dist/js-data-angular.js',
+    'www/lib/angular-mocks/angular-mocks.js',
+    'www/cordova.js',
+    'www/js/app.js',
+    'www/js/config.js',
+    'www/js/controllers.js',
+    'www/js/services.js',
+     'tests/**/*.js'
     ],
 
 
@@ -33,7 +42,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['story'],
 
 
     // web server port

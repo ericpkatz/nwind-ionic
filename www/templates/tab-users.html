@@ -2,8 +2,9 @@
   <ion-content class="padding">
     <h2>Users</h2>
     <ion-list>
-      <ion-item ng-repeat="user in users" type="item-text-wrap" ui-sref="tab.userDetail({id: user.id})">
+      <ion-item class='item-icon-right' ng-repeat="user in users" type="item-text-wrap" ui-sref="tab.userDetail({id: user.id})">
         <h2>{{user.firstName}}, {{user.lastName}}</h2>
+        <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
   </ion-content>

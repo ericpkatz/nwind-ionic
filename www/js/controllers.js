@@ -1,22 +1,26 @@
 angular.module('starter.controllers', [])
 
 .controller('UsersCtrl', function($scope, UserService) {
-  UserService.fetchAll()
+  UserService.findAll()
     .then(function(users){
       $scope.users = users;
     });
 
 })
 .controller('UsersDetailCtrl', function($scope, UserService, $stateParams) {
-  UserService.fetchOne($stateParams.id)
+  UserService.find($stateParams.id)
     .then(function(user){
       $scope.user = user;
+      $scope.selectedFavorite = 'favorite';
+      $scope.selectTab = function(favorite){
+        $scope.selectedFavorite = favorite;
+      };
     });
 
 })
 
 .controller('ProductsCtrl', function($scope, ProductService) {
-  ProductService.fetchAll()
+  ProductService.findAll()
     .then(function(products){
       $scope.products = products;
     

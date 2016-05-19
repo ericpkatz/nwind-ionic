@@ -38,9 +38,41 @@
       </div>
     </div>
     -->
-    <a ui-sref='tab.userDetail.favorite({id: user.id})'>Favorite</a>
-    <a ui-sref='tab.userDetail.secondFavorite({id: user.id})'>Second Favorite</a>
-    <a ui-sref='tab.userDetail.leastFavorite({id: user.id})'>Least Favorite</a>
-    <ion-nav-view></ion-nav-view>
+    <div class='row'>
+      <div class='col'>
+        <a ng-click='selectTab("favorite")' class='button' ng-class="{'button-energized' : selectedFavorite === 'favorite'}">Favorite</a>
+      </div>
+      <div class='col'>
+        <a ng-click='selectTab("secondFavorite")' class='button' ng-class="{'button-energized' : selectedFavorite === 'secondFavorite'}">Second Favorite</a>
+      </div>
+      <div class='col'>
+        <a ng-click='selectTab("leastFavorite")' class='button' ng-class="{'button-energized' : selectedFavorite === 'leastFavorite'}">Least Favorite</a>
+      </div>
+    </div>
+      <div class='card' ng-show='selectedFavorite === "favorite"'>
+        <div class='item item-positive'>
+          Favorite
+        </div>
+        <div class='item'>
+          {{ user.favoriteProduct.name }}
+        </div>
+      </div>
+      <div class='card' ng-show='selectedFavorite === "secondFavorite"'>
+        <div class='item item-energized'>
+          Second Favorite
+        </div>
+        <div class='item'>
+          {{ user.secondFavoriteProduct.name }}
+        </div>
+      </div>
+      <div class='card' ng-show='selectedFavorite === "leastFavorite"'>
+        <div class='item'>
+          Least Favorite
+        </div>
+        <div class='item'>
+          {{ user.leastFavoriteProduct.name }}
+        </div>
+      </div>
+
   </ion-content>
 </ion-view>

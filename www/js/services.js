@@ -1,38 +1,11 @@
 angular.module('starter.services', [])
-.factory('UserService', function($q, $http) {
-
-  return {
-    fetchAll: function(){
-      return $http.get('http://localhost:3000/api/users')
-        .then(function(response){
-          return response.data;
-        });
-    },
-    fetchOne: function(id){
-      return $http.get('http://localhost:3000/api/users/' + id)
-        .then(function(response){
-          return response.data;
-        });
-    }
-  };
-   
+.factory('UserService', function($q, $http, DS) {
+  var service = DS.defineResource('users');
+  return service;
 })
-.factory('ProductService', function($q, $http) {
-
-  return {
-    fetchAll: function(){
-      return $http.get('http://localhost:3000/api/products')
-        .then(function(response){
-          return response.data;
-        });
-    },
-    fetchOne: function(id){
-      return $http.get('http://localhost:3000/api/products/' + id)
-        .then(function(response){
-          return response.data;
-        });
-    }
-  };
+.factory('ProductService', function(DS) {
+  var service = DS.defineResource('products');
+  return service;
 })
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array

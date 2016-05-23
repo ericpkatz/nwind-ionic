@@ -7,6 +7,10 @@ angular.module('starter.services', [])
   var service = DS.defineResource('products');
   return service;
 })
+.factory('CategoryService', function(DS) {
+  var service = DS.defineResource('categories');
+  return service;
+})
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
 

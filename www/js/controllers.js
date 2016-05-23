@@ -19,11 +19,10 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ProductsCtrl', function($scope, ProductService) {
-  ProductService.findAll()
-    .then(function(products){
-      $scope.products = products;
-    
+.controller('ProductsCtrl', function($scope, CategoryService) {
+  CategoryService.findAll()
+    .then(function(categories){
+      $scope.categories = categories;
     });
 
 })

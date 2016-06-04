@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('nwind', ['ionic', 'starter.controllers', 'starter.services', 'js-data'])
+angular.module('nwind', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services', 'js-data'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

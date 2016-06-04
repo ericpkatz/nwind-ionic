@@ -16,12 +16,50 @@ angular.module('nwind')
 
     // Each tab has its own nav history stack:
 
-    .state('tab.products', {
-      url: '/products',
+    .state('tab.departments', {
+      resolve: {
+        departments: function(Department){
+          return Department.findAll();
+        }
+      },
+      url: '/departments',
       views: {
-        'tab-products': {
-          templateUrl: 'templates/tab-products.html',
-          controller: 'ProductsCtrl'
+        'tab-departments': {
+          templateUrl: 'templates/tab-departments.html',
+          controller: function($scope, departments){
+            $scope.departments = departments;
+          }
+        }
+      },
+    })
+    .state('tab.department', {
+      url: '/department/:id',
+      resolve: {
+        department: function(Department, $stateParams, $ionicLoading){
+          $ionicLoading.show();
+          return Department.find($stateParams.id);
+        },
+        departments: function(Department){
+          return Department.findAll();
+        }
+      },
+      views: {
+        'tab-departments': {
+          templateUrl: 'templates/tab-department.html',
+          controller: function($ionicLoading, $scope, department, departments, $state){
+            $ionicLoading.hide();
+            $scope.idx = departments.indexOf(department);
+            $scope.departments = departments;
+            $scope.department = department;
+            $scope.next = function(){
+              $scope.idx++;
+              $scope.department = departments[$scope.idx];
+            };
+            $scope.previous = function(){
+              $scope.idx--;
+              $scope.department = departments[$scope.idx];
+            };
+          }
         }
       }
     })
@@ -82,7 +120,7 @@ angular.module('nwind')
     });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/products');
+    $urlRouterProvider.otherwise('/tab/departments');
 
   })
   .run(function(DS){

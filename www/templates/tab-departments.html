@@ -1,0 +1,10 @@
+<ion-view view-title="Departments">
+  <ion-content class="padding">
+    <ion-list>
+      <ion-item class='item-icon-right' ng-repeat="department in departments" type="item-text-wrap" ui-sref="tab.department({id: department.id})">
+        {{department.name }}
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

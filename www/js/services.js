@@ -3,6 +3,13 @@ angular.module('starter.services', [])
   var service = DS.defineResource('users');
   return service;
 })
+.factory('Department', function(DS) {
+  var factory = DS.defineResource({
+    name: 'department',
+    endpoint: 'departments'
+  });
+  return factory;
+})
 .factory('ProductService', function(DS) {
   var service = DS.defineResource('products');
   return service;

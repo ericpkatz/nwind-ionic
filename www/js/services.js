@@ -3,6 +3,14 @@ angular.module('starter.services', [])
   var service = DS.defineResource('users');
   return service;
 })
+.factory('Session', function(DS) {
+  var factory = DS.defineResource({
+    name: 'session',
+    endpoint: 'sessions'
+  });
+  factory.auth = {};
+  return factory;
+})
 .factory('Department', function(DS) {
   var factory = DS.defineResource({
     name: 'department',

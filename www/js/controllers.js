@@ -7,14 +7,13 @@ angular.module('starter.controllers', [])
     });
 
 })
+.controller('TabsCtrl', function(Session, $scope) {
+  $scope.auth = Session.auth;
+})
 .controller('UsersDetailCtrl', function($scope, UserService, $stateParams) {
   UserService.find($stateParams.id)
     .then(function(user){
       $scope.user = user;
-      $scope.selectedFavorite = 'favorite';
-      $scope.selectTab = function(favorite){
-        $scope.selectedFavorite = favorite;
-      };
     });
 
 })
@@ -46,7 +45,13 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, Session, $window, $state) {
+  $scope.logout = function(){
+    $window.localStorage.removeItem('token');
+    angular.copy({}, Session.auth);
+    $state.go('tab.departments');
+  };
+  $scope.auth = Session.auth;
   $scope.settings = {
     enableFriends: true
   };

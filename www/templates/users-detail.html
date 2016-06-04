@@ -1,52 +1,12 @@
-<ion-view view-title="Users Detail">
+<ion-view view-title="{{ user.firstName }} - {{ user.lastName }}">
   <ion-content class="padding">
-    <h2>User</h2>
     <div class='card'>
-      <div class='item item-energized'>
-        {{ user.firstName }}
-      </div>
       <div class='item'>
-        {{ user.lastName }}
-      </div>
-      <div class='item'>
-        {{ user.jobTitle }}
+        <pre>
+          {{ user | json }}
+        </pre>
       </div>
     </div>
-    <div class='row'>
-      <div class='col'>
-        <a ng-click='selectTab("favorite")' class='button' ng-class="{'button-energized' : selectedFavorite === 'favorite'}">Favorite</a>
-      </div>
-      <div class='col'>
-        <a ng-click='selectTab("secondFavorite")' class='button' ng-class="{'button-energized' : selectedFavorite === 'secondFavorite'}">Second Favorite</a>
-      </div>
-      <div class='col'>
-        <a ng-click='selectTab("leastFavorite")' class='button' ng-class="{'button-energized' : selectedFavorite === 'leastFavorite'}">Least Favorite</a>
-      </div>
-    </div>
-      <div class='card' ng-show='selectedFavorite === "favorite"'>
-        <div class='item item-positive'>
-          Favorite
-        </div>
-        <div class='item'>
-          {{ user.favoriteProduct.name }}
-        </div>
-      </div>
-      <div class='card' ng-show='selectedFavorite === "secondFavorite"'>
-        <div class='item item-energized'>
-          Second Favorite
-        </div>
-        <div class='item'>
-          {{ user.secondFavoriteProduct.name }}
-        </div>
-      </div>
-      <div class='card' ng-show='selectedFavorite === "leastFavorite"'>
-        <div class='item'>
-          Least Favorite
-        </div>
-        <div class='item'>
-          {{ user.leastFavoriteProduct.name }}
-        </div>
-      </div>
 
   </ion-content>
 </ion-view>

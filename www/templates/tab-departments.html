@@ -1,4 +1,9 @@
 <ion-view view-title="Departments">
+    <ion-nav-buttons side="secondary">
+      <a class="button ion-chevron-right icon-right button-calm" ui-sref='login'>
+        Login
+      </a>
+    </ion-nav-buttons>
   <ion-content class="padding">
     <ion-list>
       <ion-item class='item-icon-right' ng-repeat="department in departments" type="item-text-wrap" ui-sref="tab.department({id: department.id})">

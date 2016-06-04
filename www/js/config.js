@@ -1,4 +1,12 @@
 angular.module('nwind')
+  .run(function(Session, $window){
+    if($window.localStorage.getItem('token'))
+      Session.find($window.localStorage.getItem('token'), { bypassCache: true})
+      .then(function(user){
+        angular.copy(user, Session.auth);
+      });
+  
+  })
   .config(function($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -116,6 +124,25 @@ angular.module('nwind')
           templateUrl: 'templates/tab-account.html',
           controller: 'AccountCtrl'
         }
+      }
+    })
+    .state('login', {
+      url: '/login',
+      templateUrl: '/templates/tab-login.html',
+      controller: function($scope, Session, $window, $state){
+        console.log('hiii');
+            $scope.credentials = {};
+            $scope.login = function(){
+              Session.create($scope.credentials)
+                .then(function(response){
+                  $window.localStorage.setItem('token', response.id);
+                  return Session.find(response.id, { bypassCache: true});
+                })
+                .then(function(user){
+                  angular.copy(user, Session.auth);
+                  $state.go('tab.account');
+                });
+            };
       }
     });
 

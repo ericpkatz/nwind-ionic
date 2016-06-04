@@ -1,9 +1,11 @@
 angular.module('starter.controllers', [])
 
-.controller('UsersCtrl', function($scope, UserService) {
+.controller('UsersCtrl', function($scope, $ionicLoading, UserService) {
+  $ionicLoading.show();
   UserService.findAll()
     .then(function(users){
       $scope.users = users;
+      $ionicLoading.hide();
     });
 
 })
@@ -11,7 +13,7 @@ angular.module('starter.controllers', [])
   $scope.auth = Session.auth;
 })
 .controller('UsersDetailCtrl', function($scope, UserService, $stateParams) {
-  UserService.find($stateParams.id)
+  UserService.find($stateParams.id, { bypassCache: true })
     .then(function(user){
       $scope.user = user;
     });
@@ -49,7 +51,7 @@ angular.module('starter.controllers', [])
   $scope.logout = function(){
     $window.localStorage.removeItem('token');
     angular.copy({}, Session.auth);
-    $state.go('tab.departments');
+    $state.go('tab.home');
   };
   $scope.auth = Session.auth;
   $scope.settings = {

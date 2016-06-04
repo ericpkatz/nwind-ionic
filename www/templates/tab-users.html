@@ -1,6 +1,5 @@
 <ion-view view-title="Users">
   <ion-content class="padding">
-    <h2>Users</h2>
     <ion-list>
       <ion-item class='item-icon-right' ng-repeat="user in users" type="item-text-wrap" ui-sref="tab.userDetail({id: user.id})">
         <h2>{{user.firstName}}, {{user.lastName}}</h2>

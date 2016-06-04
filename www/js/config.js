@@ -23,11 +23,23 @@ angular.module('nwind')
     })
 
     // Each tab has its own nav history stack:
+    .state('tab.home', {
+      url: '/home',
+      views: {
+        'tab-home': {
+          templateUrl: 'templates/tab-home.html'
+        }
+      }
+    })
 
     .state('tab.departments', {
+      cache: false,
       resolve: {
-        departments: function(Department){
-          return Department.findAll();
+        departments: function(Department, $ionicLoading){
+          return Department.findAll()
+            .then(function(departments){
+              return departments;
+            });
         }
       },
       url: '/departments',
@@ -41,10 +53,10 @@ angular.module('nwind')
       },
     })
     .state('tab.department', {
+      cache: false,
       url: '/department/:id',
       resolve: {
         department: function(Department, $stateParams, $ionicLoading){
-          $ionicLoading.show();
           return Department.find($stateParams.id);
         },
         departments: function(Department){
@@ -55,7 +67,6 @@ angular.module('nwind')
         'tab-departments': {
           templateUrl: 'templates/tab-department.html',
           controller: function($ionicLoading, $scope, department, departments, $state){
-            $ionicLoading.hide();
             $scope.idx = departments.indexOf(department);
             $scope.departments = departments;
             $scope.department = department;
@@ -71,16 +82,8 @@ angular.module('nwind')
         }
       }
     })
-    .state('tab.productsByCategory', {
-      url: '/products/category/:id',
-      views: {
-        'tab-products': {
-          templateUrl: 'templates/tab-products-by-category.html',
-          //controller: 'ProductsCtrl'
-        }
-      }
-    })
     .state('tab.users', {
+      cache: false,
       url: '/users',
       views: {
         'tab-users': {
@@ -90,6 +93,7 @@ angular.module('nwind')
       }
     })
     .state('tab.userDetail', {
+      cache: false,
       url: '/users/:id',
       views: {
         'tab-users': {
@@ -98,27 +102,21 @@ angular.module('nwind')
         }
       }
     })
-    .state('tab.chats', {
-        url: '/chats',
-        views: {
-          'tab-chats': {
-            templateUrl: 'templates/tab-chats.html',
-            controller: 'ChatsCtrl'
-          }
-        }
-      })
-      .state('tab.chat-detail', {
-        url: '/chats/:chatId',
-        views: {
-          'tab-chats': {
-            templateUrl: 'templates/chat-detail.html',
-            controller: 'ChatDetailCtrl'
-          }
-        }
-      })
-
     .state('tab.account', {
       url: '/account',
+      resolve: {
+        user: function(Session, $state, $timeout, $q, $window){
+          if(!$window.localStorage['token'])
+          {
+            $timeout(function(){
+              $state.go('login');
+            }, 0);
+          }
+          else{
+            return Session.find($window.localStorage['token']);
+          }
+        }
+      },
       views: {
         'tab-account': {
           templateUrl: 'templates/tab-account.html',
@@ -128,26 +126,25 @@ angular.module('nwind')
     })
     .state('login', {
       url: '/login',
-      templateUrl: '/templates/tab-login.html',
+      templateUrl: 'templates/tab-login.html',
       controller: function($scope, Session, $window, $state){
-        console.log('hiii');
-            $scope.credentials = {};
-            $scope.login = function(){
-              Session.create($scope.credentials)
-                .then(function(response){
-                  $window.localStorage.setItem('token', response.id);
-                  return Session.find(response.id, { bypassCache: true});
-                })
-                .then(function(user){
-                  angular.copy(user, Session.auth);
-                  $state.go('tab.account');
-                });
-            };
+        $scope.credentials = {};
+        $scope.login = function(){
+          Session.create($scope.credentials)
+            .then(function(response){
+              $window.localStorage.setItem('token', response.id);
+              return Session.find(response.id, { bypassCache: true});
+            })
+            .then(function(user){
+              angular.copy(user, Session.auth);
+              $state.go('tab.account');
+            });
+        };
       }
     });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/tab/departments');
+    $urlRouterProvider.otherwise('/tab/home');
 
   })
   .run(function(DS){

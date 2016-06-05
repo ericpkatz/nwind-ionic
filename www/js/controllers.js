@@ -1,8 +1,8 @@
 angular.module('starter.controllers', [])
 
-.controller('UsersCtrl', function($scope, $ionicLoading, UserService) {
+.controller('UsersCtrl', function($scope, $ionicLoading, User) {
   $ionicLoading.show();
-  UserService.findAll()
+  User.findAll()
     .then(function(users){
       $scope.users = users;
       $ionicLoading.hide();
@@ -12,8 +12,8 @@ angular.module('starter.controllers', [])
 .controller('TabsCtrl', function(Session, $scope) {
   $scope.auth = Session.auth;
 })
-.controller('UsersDetailCtrl', function($scope, UserService, $stateParams) {
-  UserService.find($stateParams.id, { bypassCache: true })
+.controller('UsersDetailCtrl', function($scope, User, $stateParams) {
+  User.find($stateParams.id, { bypassCache: true })
     .then(function(user){
       $scope.user = user;
     });

@@ -1,15 +1,5 @@
 <ion-view cache-view='false' view-title="{{category.name}}">
-    <ion-nav-buttons side="secondary">
-      <button class="button ion-chevron-left icon-left button-calm" ng-click="previous()" ng-disabled='idx == 0'>
-        Previous
-      </button>
-      &nbsp;
-      <button class="button ion-chevron-right icon-right button-calm" ng-click="next()" ng-disabled='departments.length - 1 === idx'>
-        Next
-      </button>
-    </ion-nav-buttons>
   <ion-content class="padding">
-    {{ auth.favoriteProducts }}
     <ion-list>
       <ion-item class='item-button-right' ng-class="{'calm': isFavorite(product)}" ng-repeat="product in products" type="item-text-wrap">
         {{product.name }}
@@ -21,15 +11,5 @@
             </button>
       </ion-item>
     </ion-list>
-    <div class='card'>
-      <div class='item'>
-        <pre>
-          {{ products }}
-        </pre>
-        <pre>
-          {{ category }}
-        </pre>
-      </div>
-    </div>
   </ion-content>
 </ion-view>

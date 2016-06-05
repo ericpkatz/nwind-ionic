@@ -1,6 +1,9 @@
 angular.module('starter.services', [])
-.factory('UserService', function($q, $http, DS) {
-  var service = DS.defineResource('users');
+.factory('User', function($q, $http, DS) {
+  var service = DS.defineResource({
+    name: 'user',
+    endpoint: 'users'
+  });
   return service;
 })
 .factory('Session', function(DS, $q, $window) {
@@ -43,6 +46,22 @@ angular.module('starter.services', [])
           parent: true,
           localKey: 'categoryId',
           localField: 'category'
+        }
+      }
+    }
+  });
+  return service;
+})
+.factory('FavoriteProduct', function(DS) {
+  var service = DS.defineResource({
+    name: 'favoriteProduct',
+    endpoint: 'favoriteProducts',
+    relations: {
+      belongsTo: {
+        user: {
+          parent: true,
+          localKey: 'userId',
+          localField: 'user'
         }
       }
     }

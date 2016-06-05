@@ -1,4 +1,5 @@
 angular.module('nwind')
+  .constant('API', 'http://nwind-api.herokuapp.com/api')
   .run(function(Session, $window){
     if($window.localStorage.getItem('token'))
       Session.find($window.localStorage.getItem('token'), { bypassCache: true})
@@ -27,6 +28,11 @@ angular.module('nwind')
       url: '/home',
       views: {
         'tab-home': {
+          controller: function($scope, Session){
+            $scope.showLogin = function(){
+              return !Session.auth.id;
+            };
+          },
           templateUrl: 'templates/tab-home.html'
         }
       }
@@ -35,6 +41,7 @@ angular.module('nwind')
       url: '/categories',
       resolve: {
         categories: function(Category){
+  
           return Category.findAll();
         }
       },
@@ -60,23 +67,42 @@ angular.module('nwind')
       views: {
         'tab-categories': {
           templateUrl: 'templates/tab-category.html',
-          controller: function(category, $scope, products, Session, $ionicPopup){
+          controller: function(API, $http, category, $scope, products, Session, $ionicPopup, FavoriteProduct, User){
             $scope.products = products;
             $scope.category = category;
             $scope.auth = Session.auth;
 
+
             $scope.addFavorite = function(product){
-               var alertPopup = $ionicPopup.alert({
-                   title: 'TO DO',
-                   template: 'Add Favorite'
-              });
+              User.inject(Session.auth);
+              FavoriteProduct.create({productId: product.id, userId: Session.auth.id})
+                .then(function(favoriteProduct){
+                  Session.auth.favoriteProducts.push(favoriteProduct);
+                 var alertPopup = $ionicPopup.alert({
+                     title: 'Success',
+                     template: 'Favorite Product has Been Added'
+                  });
+                
+                });
             };
 
             $scope.removeFavorite = function(product){
-               var alertPopup = $ionicPopup.alert({
-                   title: 'TO DO',
-                   template: 'Remove Favorite'
-              });
+              var filtered = Session.auth.favoriteProducts
+                .filter(function(favoriteProduct){
+                  return favoriteProduct.productId === product.id;
+                });
+              var favoriteProduct = filtered[0];  
+              User.inject(Session.auth);
+              FavoriteProduct.inject(favoriteProduct);
+              FavoriteProduct.destroy({id: favoriteProduct.id, userId: Session.auth.id})
+                .then(function(){
+                  var index = Session.auth.favoriteProducts.indexOf(favoriteProduct);
+                  Session.auth.favoriteProducts.splice(index, 1);
+                 var alertPopup = $ionicPopup.alert({
+                     title: 'Success',
+                     template: 'Favorite product has been removed.'
+                  });
+                });
             };
 
             $scope.loggedIn = function(){
@@ -193,7 +219,11 @@ angular.module('nwind')
       url: '/login',
       templateUrl: 'templates/tab-login.html',
       controller: function($scope, Session, $window, $state){
-        $scope.credentials = {};
+        $scope.credentials = {
+          email: 'curly.katz@example.com',
+          password: 'Curly'
+        
+        };
         $scope.login = function(){
           Session.create($scope.credentials)
             .then(function(response){
@@ -212,7 +242,7 @@ angular.module('nwind')
     $urlRouterProvider.otherwise('/tab/home');
 
   })
-  .run(function(DS){
+  .run(function(DS, API){
     //DS.adapters.http.defaults.basePath = 'http://localhost:3000/api';
-    DS.adapters.http.defaults.basePath = 'http://nwind-api.herokuapp.com/api';
+    DS.adapters.http.defaults.basePath = API;
   });

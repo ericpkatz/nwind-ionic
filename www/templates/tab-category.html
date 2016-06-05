@@ -9,8 +9,9 @@
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
+    {{ auth.favoriteProducts }}
     <ion-list>
-      <ion-item class='item-icon-right' ng-repeat="product in products" type="item-text-wrap" ui-sref="tab.department({id: department.id})">
+      <ion-item class='item-icon-right' ng-repeat="product in products" type="item-text-wrap">
         {{product.name }}
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>

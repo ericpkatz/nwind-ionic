@@ -60,9 +60,10 @@ angular.module('nwind')
       views: {
         'tab-categories': {
           templateUrl: 'templates/tab-category.html',
-          controller: function(category, $scope, products){
+          controller: function(category, $scope, products, Session){
             $scope.products = products;
             $scope.category = category;
+            $scope.auth = Session.auth;
           }
         }
       }

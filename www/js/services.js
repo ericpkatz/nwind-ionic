@@ -18,13 +18,28 @@ angular.module('starter.services', [])
   });
   return factory;
 })
-.factory('ProductService', function(DS) {
-  var service = DS.defineResource('products');
+.factory('Product', function(DS) {
+  var service = DS.defineResource({
+    name: 'product',
+    endpoint: 'products',
+    relations: {
+      belongsTo: {
+        category: {
+          parent: true,
+          localKey: 'categoryId',
+          localField: 'category'
+        }
+      }
+    }
+  });
   return service;
 })
-.factory('CategoryService', function(DS) {
-  var service = DS.defineResource('categories');
-  return service;
+.factory('Category', function(DS) {
+  var factory = DS.defineResource({
+    name: 'category',
+    endpoint: 'categories'
+  });
+  return factory;
 })
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array

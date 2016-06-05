@@ -31,20 +31,55 @@ angular.module('nwind')
         }
       }
     })
-
-    .state('tab.departments', {
-      cache: false,
+    .state('tab.categories', {
+      url: '/categories',
       resolve: {
-        departments: function(Department, $ionicLoading){
-          return Department.findAll()
-            .then(function(departments){
-              return departments;
-            });
+        categories: function(Category){
+          return Category.findAll();
         }
       },
+      views: {
+        'tab-categories': {
+          templateUrl: 'templates/tab-categories.html',
+          controller: function(categories, $scope){
+            $scope.categories = categories;
+          }
+        }
+      }
+    })
+    .state('tab.category', {
+      url: '/categories/:id',
+      resolve: {
+        products: function(Product, $stateParams){
+          return Product.findAll({categoryId: $stateParams.id});
+        },
+        category: function(Category, $stateParams){
+          return Category.find($stateParams.id);
+        }
+      },
+      views: {
+        'tab-categories': {
+          templateUrl: 'templates/tab-category.html',
+          controller: function(category, $scope, products){
+            $scope.products = products;
+            $scope.category = category;
+          }
+        }
+      }
+    })
+    .state('tab.departments', {
       url: '/departments',
       views: {
         'tab-departments': {
+          cache: false,
+          resolve: {
+            departments: function(Department, $ionicLoading){
+              return Department.findAll()
+                .then(function(departments){
+                  return departments;
+                });
+            }
+          },
           templateUrl: 'templates/tab-departments.html',
           controller: function($scope, departments){
             $scope.departments = departments;
@@ -65,6 +100,7 @@ angular.module('nwind')
       },
       views: {
         'tab-departments': {
+          cache: false,
           templateUrl: 'templates/tab-department.html',
           controller: function($ionicLoading, $scope, department, departments, $state){
             $scope.idx = departments.indexOf(department);

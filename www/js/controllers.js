@@ -17,7 +17,6 @@ angular.module('starter.controllers', [])
     .then(function(user){
       $scope.user = user;
     });
-
 })
 
 .controller('ProductsCtrl', function($scope, CategoryService) {

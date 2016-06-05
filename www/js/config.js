@@ -60,10 +60,38 @@ angular.module('nwind')
       views: {
         'tab-categories': {
           templateUrl: 'templates/tab-category.html',
-          controller: function(category, $scope, products, Session){
+          controller: function(category, $scope, products, Session, $ionicPopup){
             $scope.products = products;
             $scope.category = category;
             $scope.auth = Session.auth;
+
+            $scope.addFavorite = function(product){
+               var alertPopup = $ionicPopup.alert({
+                   title: 'TO DO',
+                   template: 'Add Favorite'
+              });
+            };
+
+            $scope.removeFavorite = function(product){
+               var alertPopup = $ionicPopup.alert({
+                   title: 'TO DO',
+                   template: 'Remove Favorite'
+              });
+            };
+
+            $scope.loggedIn = function(){
+              return Session.auth.id;
+            };
+            
+            $scope.isFavorite = function(product){
+              if(!Session.auth.id)
+                return false;
+              var favoriteIds = Session.auth.favoriteProducts
+                .map(function(favoriteProduct){
+                  return favoriteProduct.productId;
+                });
+              return favoriteIds.indexOf(product.id) !== -1;
+            };
           }
         }
       }

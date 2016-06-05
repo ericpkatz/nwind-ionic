@@ -11,9 +11,14 @@
   <ion-content class="padding">
     {{ auth.favoriteProducts }}
     <ion-list>
-      <ion-item class='item-icon-right' ng-repeat="product in products" type="item-text-wrap">
+      <ion-item class='item-button-right' ng-class="{'calm': isFavorite(product)}" ng-repeat="product in products" type="item-text-wrap">
         {{product.name }}
-        <i class="icon ion-chevron-right icon-accessory"></i>
+            <button class="button button-positive" ng-click='addFavorite(product)' ng-show='!isFavorite(product) && loggedIn()'>
+              <i class="icon ion-plus-round"></i>
+            </button>
+            <button class="button button-negative" ng-click='removeFavorite(product)' ng-show='isFavorite(product) && loggedIn()'>
+              <i class="icon ion-minus-round"></i>
+            </button>
       </ion-item>
     </ion-list>
     <div class='card'>

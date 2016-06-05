@@ -3,12 +3,27 @@ angular.module('starter.services', [])
   var service = DS.defineResource('users');
   return service;
 })
-.factory('Session', function(DS) {
+.factory('Session', function(DS, $q, $window) {
   var factory = DS.defineResource({
     name: 'session',
     endpoint: 'sessions'
   });
   factory.auth = {};
+
+  factory.me = function(){
+    if(!$window.localStorage.getItem('token'))
+      return $q.when(null);
+    if(factory.auth.id){
+      return $q.when(factory.auth);
+    }
+    return factory.find($window.localStorage.getItem('token')) 
+    .then(function(response){
+      angular.copy(response.data, factory.auth);
+      return factory.auth;
+    });
+  };
+  
+
   return factory;
 })
 .factory('Department', function(DS) {

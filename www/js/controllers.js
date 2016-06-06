@@ -19,13 +19,6 @@ angular.module('starter.controllers', [])
     });
 })
 
-.controller('ProductsCtrl', function($scope, CategoryService) {
-  CategoryService.findAll()
-    .then(function(categories){
-      $scope.categories = categories;
-    });
-
-})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

@@ -36,22 +36,6 @@ angular.module('starter.services', [])
   });
   return factory;
 })
-.factory('Product', function(DS) {
-  var service = DS.defineResource({
-    name: 'product',
-    endpoint: 'products',
-    relations: {
-      belongsTo: {
-        category: {
-          parent: true,
-          localKey: 'categoryId',
-          localField: 'category'
-        }
-      }
-    }
-  });
-  return service;
-})
 .factory('FavoriteProduct', function(DS) {
   var service = DS.defineResource({
     name: 'favoriteProduct',
@@ -67,13 +51,6 @@ angular.module('starter.services', [])
     }
   });
   return service;
-})
-.factory('Category', function(DS) {
-  var factory = DS.defineResource({
-    name: 'category',
-    endpoint: 'categories'
-  });
-  return factory;
 })
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array

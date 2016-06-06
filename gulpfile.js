@@ -8,10 +8,22 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  js: ['./www/js/app.js', './www/js/**/*.js']
 };
 
 gulp.task('default', ['sass']);
+
+var inject = require('gulp-inject');
+ 
+gulp.task('inject:js', function () {
+  var target = gulp.src('./www/index.html');
+  // It's not necessary to read the files (will speed up things), we're only after their paths: 
+  var sources = gulp.src(paths.js, {read: false});
+ 
+  return target.pipe(inject(sources, { ignorePath: '/www/'}))
+    .pipe(gulp.dest('./www'));
+});
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -24,6 +36,10 @@ gulp.task('sass', function(done) {
     .pipe(rename({ extname: '.min.css' }))
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
+});
+
+gulp.task('watch:js', ['inject:js'], function() {
+  gulp.watch(paths.js, ['inject:js']);
 });
 
 gulp.task('watch', function() {

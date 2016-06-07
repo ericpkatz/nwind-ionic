@@ -6,13 +6,9 @@ angular.module('nwind')
         
         };
         $scope.login = function(){
-          Session.create($scope.credentials)
-            .then(function(response){
-              $window.localStorage.setItem('token', response.id);
-              return Session.find(response.id, { bypassCache: true});
-            })
-            .then(function(user){
-              angular.copy(user, Session.auth);
+          Session.login($scope.credentials)
+            .then(function(){
+              console.log(Session.auth);
               $state.go('tab.account');
             });
         };

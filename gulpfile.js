@@ -21,7 +21,7 @@ gulp.task('inject:js', function () {
   // It's not necessary to read the files (will speed up things), we're only after their paths: 
   var sources = gulp.src(paths.js, {read: false});
  
-  return target.pipe(inject(sources, { ignorePath: '/www/'}))
+  return target.pipe(inject(sources, { ignorePath: '/www/', addRootSlash: false}))
     .pipe(gulp.dest('./www'));
 });
 

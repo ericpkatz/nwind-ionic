@@ -1,5 +1,6 @@
 angular.module('nwind')
   .constant('API', 'http://nwind-api.herokuapp.com/api')
+  //.constant('API', 'http://localhost:3000/api')
   .config(function($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states

@@ -19,6 +19,14 @@ angular.module('nwind')
       .state('tab.category', {
         url: '/categories/:id',
         resolve: {
+          favoriteProducts: function(Session, FavoriteProduct){
+            return Session.me()
+              .then(function(me){
+                if(!me)
+                  return null;
+                return FavoriteProduct.findAll({userId: me.id});
+              });
+          },
           products: function(Product, $stateParams){
             return Product.findAll({categoryId: $stateParams.id});
           },

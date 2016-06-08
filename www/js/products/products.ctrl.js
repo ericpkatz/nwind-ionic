@@ -1,40 +1,35 @@
 angular.module('nwind')
-  .controller('ProductsCtrl', function(API, $http, category, $scope, products, Session, $ionicPopup, FavoriteProduct, User){
+  .controller('ProductsCtrl', function(API, $http, category, $scope, products, Session, $ionicPopup, FavoriteProduct, User, favoriteProducts){
+    console.log(favoriteProducts);
             $scope.products = products;
             $scope.category = category;
             $scope.auth = Session.auth;
 
 
             $scope.addFavorite = function(product){
-              User.inject(Session.auth);
               FavoriteProduct.create({productId: product.id, userId: Session.auth.id})
                 .then(function(favoriteProduct){
-                  Session.auth.favoriteProducts.push(favoriteProduct);
-                 var alertPopup = $ionicPopup.alert({
-                     title: 'Success',
-                     template: 'Favorite Product has Been Added'
-                  });
-                
+                  favoriteProducts.push(favoriteProduct);//why?
                 });
             };
 
             $scope.removeFavorite = function(product){
-              var filtered = Session.auth.favoriteProducts
+              var filtered = favoriteProducts
                 .filter(function(favoriteProduct){
                   return favoriteProduct.productId === product.id;
                 });
               var favoriteProduct = filtered[0];  
-              User.inject(Session.auth);
-              FavoriteProduct.inject(favoriteProduct);
-              FavoriteProduct.destroy({id: favoriteProduct.id, userId: Session.auth.id})
-                .then(function(){
-                  var index = Session.auth.favoriteProducts.indexOf(favoriteProduct);
-                  Session.auth.favoriteProducts.splice(index, 1);
-                 var alertPopup = $ionicPopup.alert({
-                     title: 'Success',
-                     template: 'Favorite product has been removed.'
-                  });
-                });
+              var alertPopup = $ionicPopup.confirm({
+                 title: 'Are you sure',
+                 template: 'That you want to remove..'
+              });
+              alertPopup.then(function(res){
+                if(res)
+                  FavoriteProduct.destroy({ id: favoriteProduct.id })
+                    .then(function(){
+
+                    });
+              });
             };
 
             $scope.loggedIn = function(){
@@ -42,9 +37,9 @@ angular.module('nwind')
             };
             
             $scope.isFavorite = function(product){
-              if(!Session.auth.id)
+              if(!favoriteProducts)
                 return false;
-              var favoriteIds = Session.auth.favoriteProducts
+              var favoriteIds = favoriteProducts
                 .map(function(favoriteProduct){
                   return favoriteProduct.productId;
                 });

@@ -1,5 +1,6 @@
 angular.module('nwind')
   .controller('AccountCtrl', function($scope, Session, $window, $state, Address) {
+    $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
     Session.me()
       .then(function(user){
         return Address.findAll({userId: user.id});

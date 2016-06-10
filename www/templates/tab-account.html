@@ -5,6 +5,7 @@
         Enable Friends
     </ion-toggle>
     <button class='button button-block' ng-click='logout()'>Logout</button>
+    <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
     <div class='card' ng-repeat='address in addresses'>
       <div class='item'>
         {{ address.street }}

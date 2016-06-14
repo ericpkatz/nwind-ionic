@@ -18,7 +18,19 @@
       </div>
     </div>
     <div class='card padding'>
-    <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+    <ui-gmap-google-map ng-if='map' center='map.center' zoom='map.zoom'>
+      <ui-gmap-marker
+                 ng-if='marker'
+        idKey='marker.id'
+        coords='marker.coords'
+        >
+      <ui-gmap-marker
+                 ng-if='here'
+        idKey='here.id'
+        coords='here.coords'
+        >
+</ui-gmap-marker>
+    </ui-gmap-google-map>
     </div>
     <div class='card'>
       <div class='item'>

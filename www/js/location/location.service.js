@@ -1,5 +1,5 @@
 angular.module('nwind')
-  .factory('LocationService', function(){
+  .factory('LocationService', function($rootScope){
     var _location = {};
     function onDeviceReady() {
     // Get a reference to the plugin.
@@ -8,6 +8,7 @@ angular.module('nwind')
 
     //This callback will be executed every time a geolocation is recorded in the background.
     var callbackFn = function(location, taskId) {
+      $rootScope.$digest();
         var coords = location.coords;
         var lat    = coords.latitude;
         var lng    = coords.longitude;

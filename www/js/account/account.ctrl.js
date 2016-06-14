@@ -1,5 +1,5 @@
 angular.module('nwind')
-  .controller('AccountCtrl', function($scope, Session, $window, $state, Address) {
+  .controller('AccountCtrl', function($scope, Session, $window, $state, Address, LocationService) {
     $scope.setMap = function(address){
       $scope.map = { center: { latitude: address.lat, longitude: address.lng }, zoom: 14 };
     };
@@ -17,6 +17,7 @@ angular.module('nwind')
            $state.go('tab.home');
         });
     };
+    $scope.location = LocationService.location;
     $scope.auth = Session.auth;
     $scope.settings = {
       enableFriends: true

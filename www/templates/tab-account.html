@@ -5,6 +5,11 @@
         Enable Friends
     </ion-toggle>
     <button class='button button-block' ng-click='logout()'>Logout</button>
+    <div class='card'>
+      <div class='item'>
+        {{ location }}
+      </div>
+    </div>
     <div class='card' ng-repeat='address in addresses'>
       <div class='item'>
         <a ng-click='setMap(address)'>

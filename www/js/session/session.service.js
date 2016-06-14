@@ -26,6 +26,7 @@ angular.module('nwind')
       if(factory.auth.id){
         return $q.when(factory.auth);
       }
+      //TODO - error handling
       return factory.find($window.localStorage.getItem('token'), { bypassCache: true }) 
       .then(function(user){
         angular.copy(user, factory.auth);
